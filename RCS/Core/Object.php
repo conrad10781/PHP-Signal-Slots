@@ -34,6 +34,12 @@ class RCS_Core_Object
      * @var string
      */
     private $_minPHPVersion = '5.2.0';
+    
+    /**
+     * Storage of Signal/Slot connections
+     * @var array
+     */
+    public static $signalSlotConnections = array();
 
     /**
      * 
@@ -45,11 +51,7 @@ class RCS_Core_Object
             throw new RCS_Core_Exception('RCS Framework '.$this->_version.' requires at least PHP '.$this->_minPHPVersion);
         }
         
-        $this->_generateGuid();    
-        
-        if ( !isset($GLOBALS['signalSlotConnections']) ) {
-            $GLOBALS['signalSlotConnections'] = array();
-        }
+        $this->_generateGuid();
         
     }
     
@@ -157,10 +159,7 @@ class RCS_Core_Object
         $eventObj->setReceiver($receiver);
         $eventObj->setSlot($slot);        
         
-        // Internally, we use this on the Zend Framework, so we have other options available ( IE Zend_Registry ) .
-        // Was switched to $GLOBALS to remove dependency on any 3rd party framework
-        $GLOBALS['signalSlotConnections'][] = $eventObj;
-        
+        self::$signalSlotConnections[] = $eventObj;
     }
     
     /**
@@ -227,10 +226,7 @@ class RCS_Core_Object
         $eventObj->setReceiver($receiver);
         $eventObj->setSlot($slot);
 
-        // Internally, we use this on the Zend Framework, so we have other options available ( IE Zend_Registry ) .
-        // Was switched to $GLOBALS to remove dependency on any 3rd party framework
-        $GLOBALS['signalSlotConnections'][] = $eventObj;
-        
+        self::$signalSlotConnections[] = $eventObj;
     }
 
     /**
@@ -243,7 +239,7 @@ class RCS_Core_Object
     {
         //Lets loop through the connected signals and see if we have a match.
         $signalSlots = array();
-        $signalSlots = $GLOBALS['signalSlotConnections'];
+        $signalSlots = self::$signalSlotConnections;
 
         if( count($signalSlots) > 0 ) {
             /* @var $eventObj RCS_Core_Event */
