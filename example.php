@@ -10,8 +10,8 @@ set_include_path(implode(PATH_SEPARATOR, array(
     get_include_path(),
 )));
 
-require "RCS/Core/Object.php";
-require "RCS/Core/Event.php";
+require "src/RCS/Core/Object.php";
+require "src/RCS/Core/Event.php";
 
 // Lets start with a class that extends \RCS\Core\Object
 /**
