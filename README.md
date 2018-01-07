@@ -8,7 +8,7 @@ As with Qt's signals/slots, this package was built to be very light, and work we
 
 Adding the functionality of this package is simple:
 
-1. Extend RCS_Core_Object in your existing class.
+1. Extend RCS_Core_Object in your existing class(es).
 2. Add @signal declarations to your doc comments for your class. 
 3. Add @slot declarations to your doc comments for your functions.
 
