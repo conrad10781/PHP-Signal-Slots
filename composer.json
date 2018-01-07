@@ -1,5 +1,5 @@
 {
-    "name": "RCS_US/Framework_Core",
+    "name": "rcs_us/framework_core",
     "type": "library",
     "description": "PHP implementation of Qt's signals/slots",
     "keywords": ["signal", "slot"],
