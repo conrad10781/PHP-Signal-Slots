@@ -4,7 +4,7 @@
     "description": "PHP implementation of Qt's signals/slots. This release is for 5.3+ & 7+ as there are namespaces. Please see other version for previous version without namespaces",
     "keywords": ["signal", "slot"],
     "require": {
-        "php": "^5.3 || ^7.0",
+        "php": "^5.3 || ^7.0"
     },
     "license": "MIT",
     "authors": [
