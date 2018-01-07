@@ -29,14 +29,14 @@ class RCS_Core_Object
      *
      * @var string
      */
-    private $_version = '0.2.4';
+    private $_version = '5.2.17';
 
     /**
      * Minimum PHP Version
      *
      * @var string
      */
-    private $_minPHPVersion = '5.2.0';
+    private $_minPHPVersion = '5.1.0';
 
     /**
      * Storage of Signal/Slot connections
@@ -109,10 +109,9 @@ class RCS_Core_Object
      * @param string $signal            
      * @param RCS_Core_Object $receiver            
      * @param string $slot            
-     * @param bool $queue            
      */
     public static function connect (RCS_Core_Object $sender, $signal, 
-            RCS_Core_Object $receiver, $slot, DateTime $queue = null)
+            RCS_Core_Object $receiver, $slot)
     {
         $isStatic = ! (isset($this) && get_class($this) == __CLASS__);
         
@@ -166,13 +165,7 @@ class RCS_Core_Object
         
         $eventObj = null;
         
-        if ($queue === null) {
-            $eventObj = new RCS_Core_Event();
-        } else {
-            $eventObj = new RCS_Core_Event_Queue($queue);
-            $eventObj->setScheduled($queue);
-        }
-        
+        $eventObj = new RCS_Core_Event();
         $eventObj->setType(RCS_Core_Event::OBJECT_CONNECTION_TYPE);
         $eventObj->setSender($sender);
         $eventObj->setSignal($signal);
@@ -189,10 +182,9 @@ class RCS_Core_Object
      * @param string $signal            
      * @param RCS_Core_Object $receiver            
      * @param string $slot            
-     * @param bool $queue            
      */
     public static function connectByName ($sender, $signal, 
-            RCS_Core_Object $receiver, $slot, DateTime $queue = null)
+            RCS_Core_Object $receiver, $slot)
     {
         $isStatic = ! (isset($this) && get_class($this) == __CLASS__);
         
@@ -247,13 +239,7 @@ class RCS_Core_Object
         
         $eventObj = null;
         
-        if ($queue === null) {
-            $eventObj = new RCS_Core_Event();
-        } else {
-            $eventObj = new RCS_Core_Event_Queue();
-            $eventObj->setScheduled($queue);
-        }
-        
+        $eventObj = new RCS_Core_Event();        
         $eventObj->setType(RCS_Core_Event::NAME_CONNECTION_TYPE);
         $eventObj->setSender($sender);
         $eventObj->setSignal($signal);
