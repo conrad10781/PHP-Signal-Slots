@@ -1,10 +1,10 @@
 {
     "name": "rcs_us/framework_core",
     "type": "library",
-    "description": "PHP implementation of Qt's signals/slots. This release supports 5.1 and up as there are no namespaces. Please see other version for 5.3.0+ which has namespaces",
+    "description": "PHP implementation of Qt's signals/slots. This release is for 5.3+ & 7+ as there are namespaces. Please see other version for previous version without namespaces",
     "keywords": ["signal", "slot"],
     "require": {
-        "php": ">=5.1.0"
+        "php": "^5.3 || ^7.0",
     },
     "license": "MIT",
     "authors": [
@@ -14,5 +14,10 @@
             "homepage": "https://www.rcs.us",
             "role": "Developer"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+          "RCS\\Core\\": "src"
+        }
+    },
 }

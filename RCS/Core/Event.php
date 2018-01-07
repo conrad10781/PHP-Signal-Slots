@@ -1,5 +1,7 @@
 <?php
 
+namespace RCS\Core;
+
 /**
  * RCS Framework Object
  * 
@@ -10,7 +12,7 @@
  * @author RCS
  * @version 0.2.4
  */
-class RCS_Core_Event
+class Event
 {
 
     const OBJECT_CONNECTION_TYPE = 0;
@@ -24,7 +26,7 @@ class RCS_Core_Event
     protected $_type;
 
     /**
-     * Accepts RCS_Core_Object, and strings
+     * Accepts \RCS\Core\Object, and strings
      *
      * @var mixed
      */
@@ -38,7 +40,7 @@ class RCS_Core_Event
 
     /**
      *
-     * @var RCS_Core_Object
+     * @var \RCS\Core\Object
      */
     protected $_receiver;
 
@@ -52,7 +54,7 @@ class RCS_Core_Event
      * Set _type
      *
      * @param int $_type            
-     * @return RCS_Core_Event
+     * @return \RCS\Core\Event
      */
     public function setType ($_type)
     {
@@ -74,7 +76,7 @@ class RCS_Core_Event
      * Set _sender
      *
      * @param mixed $_sender            
-     * @return RCS_Core_Event
+     * @return \RCS\Core\Event
      */
     public function setSender ($_sender)
     {
@@ -96,7 +98,7 @@ class RCS_Core_Event
      * Set _signal
      *
      * @param string $_signal            
-     * @return RCS_Core_Event
+     * @return \RCS\Core\Event
      */
     public function setSignal ($_signal)
     {
@@ -117,10 +119,10 @@ class RCS_Core_Event
     /**
      * Set _receiver
      *
-     * @param RCS_Core_Object $_receiver            
-     * @return RCS_Core_Event
+     * @param \RCS\Core\Object $_receiver            
+     * @return \RCS\Core\Event
      */
-    public function setReceiver (RCS_Core_Object $_receiver)
+    public function setReceiver (\RCS\Core\Object $_receiver)
     {
         $this->_receiver = $_receiver;
         return $this;
@@ -129,7 +131,7 @@ class RCS_Core_Event
     /**
      * Get _receiver
      *
-     * @return RCS_Core_Object
+     * @return \RCS\Core\Object
      */
     public function getReceiver ()
     {
@@ -140,7 +142,7 @@ class RCS_Core_Event
      * Set _slot
      *
      * @param string $_slot            
-     * @return RCS_Core_Event
+     * @return \RCS\Core\Event
      */
     public function setSlot ($_slot)
     {

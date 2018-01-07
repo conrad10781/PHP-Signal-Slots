@@ -1,5 +1,7 @@
 <?php
 
+namespace RCS\Core;
+
 /**
  * RCS Framework Object
  * 
@@ -10,7 +12,7 @@
  * @author RCS
  * @version 0.2.4
  */
-class RCS_Core_Exception extends Exception
+class Exception extends \Exception
 {
 }
 

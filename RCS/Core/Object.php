@@ -1,5 +1,7 @@
 <?php
 
+namespace RCS\Core;
+
 /**
  * RCS Framework Object
  * 
@@ -14,7 +16,7 @@
  * @author RCS
  * @version 0.2.4
  */
-class RCS_Core_Object
+class Object
 {
 
     /**
@@ -53,7 +55,7 @@ class RCS_Core_Object
     {
         // Handled in Composer, but just in case this was manually extracted
         if (version_compare(PHP_VERSION, $this->_minPHPVersion, '<')) {
-            throw new RCS_Core_Exception(
+            throw new \RCS\Core\Exception(
                     'RCS Framework ' . $this->_version .
                              ' requires at least PHP ' . $this->_minPHPVersion);
         }
@@ -105,68 +107,68 @@ class RCS_Core_Object
     /**
      * Connect
      *
-     * @param RCS_Core_Object $sender            
+     * @param \RCS\Core\Object $sender            
      * @param string $signal            
-     * @param RCS_Core_Object $receiver            
+     * @param \RCS\Core\Object $receiver            
      * @param string $slot            
      */
-    public static function connect (RCS_Core_Object $sender, $signal, 
-            RCS_Core_Object $receiver, $slot)
+    public static function connect (\RCS\Core\Object $sender, $signal, 
+            \RCS\Core\Object $receiver, $slot)
     {
         $isStatic = ! (isset($this) && get_class($this) == __CLASS__);
         
         // Is this a static call ?
         if (! $isStatic) {
-            throw new Exception(__METHOD__ . ' is static ');
+            throw new \Exception(__METHOD__ . ' is static ');
         }
         
         // Check if $signal is a string
         if (! is_string($signal)) {
-            throw new InvalidArgumentException('$signal must be of type string');
+            throw new \InvalidArgumentException('$signal must be of type string');
         }
         
         // Check if $slot is a string
         if (! is_string($slot)) {
-            throw new InvalidArgumentException('$slot must be of type string');
+            throw new \InvalidArgumentException('$slot must be of type string');
         }
         
         if ($sender->getGuid() === null) {
-            throw new Exception(__METHOD__ . ' .. sender does not have a guid');
+            throw new \Exception(__METHOD__ . ' .. sender does not have a guid');
         }
         
         if ($receiver->getGuid() === null) {
-            throw new Exception(__METHOD__ . ' .. receiver does not have a guid');
+            throw new \Exception(__METHOD__ . ' .. receiver does not have a guid');
         }
         
         // Check if slot is a valid slot
-        $slotReflection = new ReflectionClass(get_class($receiver));
+        $slotReflection = new \ReflectionClass(get_class($receiver));
         
         try {
             /* @var $method ReflectionMethod */
             $method = $slotReflection->getMethod($slot);
-        } catch (ReflectionException $e) {
-            throw new InvalidArgumentException($e->getMessage());
+        } catch (\ReflectionException $e) {
+            throw new \InvalidArgumentException($e->getMessage());
         }
         
         if (! strstr($method->getDocComment(), '@slot')) {
-            throw new InvalidArgumentException(
+            throw new \InvalidArgumentException(
                     $slotReflection->getName() . '::' . $method->getName() .
                              ' is not declared as a slot');
         }
         
         // Check if signal is a valid signal
-        $signalReflection = new ReflectionClass(get_class($sender));
+        $signalReflection = new \ReflectionClass(get_class($sender));
         
         if (! strstr($signalReflection->getDocComment(), $signal)) {
-            throw new InvalidArgumentException(
+            throw new \InvalidArgumentException(
                     $signalReflection->getName() . ' does not have ' . $signal .
                              ' declared as a signal');
         }
         
         $eventObj = null;
         
-        $eventObj = new RCS_Core_Event();
-        $eventObj->setType(RCS_Core_Event::OBJECT_CONNECTION_TYPE);
+        $eventObj = new \RCS\Core\Event();
+        $eventObj->setType(\RCS\Core\Event::OBJECT_CONNECTION_TYPE);
         $eventObj->setSender($sender);
         $eventObj->setSignal($signal);
         $eventObj->setReceiver($receiver);
@@ -180,67 +182,67 @@ class RCS_Core_Object
      *
      * @param string $sender            
      * @param string $signal            
-     * @param RCS_Core_Object $receiver            
+     * @param \RCS\Core\Object $receiver            
      * @param string $slot            
      */
     public static function connectByName ($sender, $signal, 
-            RCS_Core_Object $receiver, $slot)
+            \RCS\Core\Object $receiver, $slot)
     {
         $isStatic = ! (isset($this) && get_class($this) == __CLASS__);
         
         // Is this a static call ?
         if (! $isStatic) {
-            throw new Exception(__METHOD__ . ' is static ');
+            throw new \Exception(__METHOD__ . ' is static ');
         }
         
         // Check if $signal is a string
         if (! is_string($signal)) {
-            throw new InvalidArgumentException('$signal must be of type string');
+            throw new \InvalidArgumentException('$signal must be of type string');
         }
         
         // Check if $slot is a string
         if (! is_string($slot)) {
-            throw new InvalidArgumentException('$slot must be of type string');
+            throw new \InvalidArgumentException('$slot must be of type string');
         }
         
         // Check if $sender is a string
         if (! is_string($sender)) {
-            throw new InvalidArgumentException('$sender must be of type string');
+            throw new \InvalidArgumentException('$sender must be of type string');
         }
         
         if ($receiver->getGuid() === null) {
-            throw new Exception(__METHOD__ . ' .. receiver does not have a guid');
+            throw new \Exception(__METHOD__ . ' .. receiver does not have a guid');
         }
         
         // Check if slot is a valid slot
-        $slotReflection = new ReflectionClass(get_class($receiver));
+        $slotReflection = new \ReflectionClass(get_class($receiver));
         
         try {
             /* @var $method ReflectionMethod */
             $method = $slotReflection->getMethod($slot);
-        } catch (ReflectionException $e) {
-            throw new InvalidArgumentException($e->getMessage());
+        } catch (\ReflectionException $e) {
+            throw new \InvalidArgumentException($e->getMessage());
         }
         
         if (! strstr($method->getDocComment(), '@slot')) {
-            throw new InvalidArgumentException(
+            throw new \InvalidArgumentException(
                     $slotReflection->getName() . '::' . $method->getName() .
                              ' is not declared as a slot');
         }
         
         // Check if signal is a valid signal
-        $signalReflection = new ReflectionClass($sender);
+        $signalReflection = new \ReflectionClass($sender);
         
         if (! strstr($signalReflection->getDocComment(), $signal)) {
-            throw new InvalidArgumentException(
+            throw new \InvalidArgumentException(
                     $signalReflection->getName() . ' does not have ' . $signal .
                              ' declared as a signal');
         }
         
         $eventObj = null;
         
-        $eventObj = new RCS_Core_Event();        
-        $eventObj->setType(RCS_Core_Event::NAME_CONNECTION_TYPE);
+        $eventObj = new \RCS\Core\Event();        
+        $eventObj->setType(\RCS\Core\Event::NAME_CONNECTION_TYPE);
         $eventObj->setSender($sender);
         $eventObj->setSignal($signal);
         $eventObj->setReceiver($receiver);
@@ -262,9 +264,9 @@ class RCS_Core_Object
         $signalSlots = self::$signalSlotConnections;
         
         if (count($signalSlots) > 0) {
-            /* @var $eventObj RCS_Core_Event */
+            /* @var $eventObj \RCS\Core\Event */
             foreach ($signalSlots as $eventObj) {
-                if ($eventObj->getType() == RCS_Core_Event::NAME_CONNECTION_TYPE) {
+                if ($eventObj->getType() == \RCS\Core\Event::NAME_CONNECTION_TYPE) {
                     if ((get_class($this) == $eventObj->getSender()) &&
                              ($signal == $eventObj->getSignal())) {
                         // We got a match
@@ -272,7 +274,7 @@ class RCS_Core_Object
                         array_shift($params);
                         $eventObj->dispatch($params);
                     }
-                } else if ($eventObj->getType() == RCS_Core_Event::OBJECT_CONNECTION_TYPE) {
+                } else if ($eventObj->getType() == \RCS\Core\Event::OBJECT_CONNECTION_TYPE) {
                     if (($this->getGuid() == $eventObj->getSender()->getGuid()) && ($signal == $eventObj->getSignal())) {
                 
                     // We got a match

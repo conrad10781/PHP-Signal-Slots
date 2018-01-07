@@ -10,22 +10,16 @@ set_include_path(implode(PATH_SEPARATOR, array(
     get_include_path(),
 )));
 
-/**
- * 
- * @param string $class_name
- */
-function __autoload($class_name) {
-    $class_name = str_replace('_', '/', $class_name). '.php';
-    require_once $class_name ;
-}
+require "RCS/Core/Object.php";
+require "RCS/Core/Event.php";
 
-// Lets start with a class that extends RCS_Core_Object
+// Lets start with a class that extends \RCS\Core\Object
 /**
  * @signal signalWithNoArguments
  * @signal signalWithOneArgument
  * ^-- This is required. You will declare all of your signals this way
  */
-class Test_Signal_Class extends RCS_Core_Object
+class Test_Signal_Class extends \RCS\Core\Object
 {
     /**
      * 
@@ -45,7 +39,7 @@ class Test_Signal_Class extends RCS_Core_Object
     
 }
 
-class Test_Slot_Class extends RCS_Core_Object
+class Test_Slot_Class extends \RCS\Core\Object
 {
     /**
      *
@@ -76,12 +70,12 @@ $testSignalClass = new Test_Signal_Class();
 $testSlotClass = new Test_Slot_Class();
 
 // This is the ideal way to implement the library
-RCS_Core_Object::connect($testSignalClass, "signalWithNoArguments", $testSlotClass, "testSlotForSignalWithNoArguments");
-RCS_Core_Object::connect($testSignalClass, "signalWithOneArgument", $testSlotClass, "testSlotForSignalWithOneArgument");
+\RCS\Core\Object::connect($testSignalClass, "signalWithNoArguments", $testSlotClass, "testSlotForSignalWithNoArguments");
+\RCS\Core\Object::connect($testSignalClass, "signalWithOneArgument", $testSlotClass, "testSlotForSignalWithOneArgument");
 
 // This can be used in cases where the original code implementation was done very poorly, 
 // or possibly encoded into a package such as Zend Guard or a PHP extension where you can't access the source directly
-RCS_Core_Object::connectByName("Test_Signal_Class", "signalWithOneArgument", $testSlotClass, "testSlotForSignalWithOneArgument");
+\RCS\Core\Object::connectByName("Test_Signal_Class", "signalWithOneArgument", $testSlotClass, "testSlotForSignalWithOneArgument");
 
 // This has just one connection
 $testSignalClass->testFunctionEmittingSignalWithNoArguments();

@@ -4,7 +4,7 @@ PHP-Signal-Slots
 Based on Qt's implementation of signals/slots ( not asynchronous )
 
 ### Overview
-This release supports 5.1 and up as there are no namespaces. Please see other version for 5.3.0+ which has namespaces
+This release is for 5.3+ & 7+ as there are namespaces. Please see other version for previous version without namespaces.
 
 As with Qt's signals/slots, this package was built to be very light, and work well with existing applications that didn't originally depend on it.
 
