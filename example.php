@@ -54,7 +54,7 @@ class Test_Slot_Class extends RCS_Core_Object
      */
     public function testSlotForSignalWithNoArguments ()
     {
-        print "Got to " . __METHOD__ . "<br />";
+        print "Got to " . __METHOD__ . "<br />\n";
     }
     
     /**
@@ -62,11 +62,11 @@ class Test_Slot_Class extends RCS_Core_Object
      * @slot
      * ^-- This is required to declare the function as a slot
      */
-    public function testSlotForsignalWithOneArgument ( Test_Model_Class $testModelClass )
+    public function testSlotForSignalWithOneArgument ( Test_Model_Class $testModelClass )
     {
         // var_dump(debug_backtrace());
-        print "Got to " . __METHOD__ . "<br />";
-        var_dump($testModelClass);
+        print "Got to " . __METHOD__ . "<br />\n";
+        print_r($testModelClass);
     }
 }
 
@@ -75,15 +75,17 @@ class Test_Model_Class {}
 $testSignalClass = new Test_Signal_Class();
 $testSlotClass = new Test_Slot_Class();
 
+// This is the ideal way to implement the library
 RCS_Core_Object::connect($testSignalClass, "signalWithNoArguments", $testSlotClass, "testSlotForSignalWithNoArguments");
-RCS_Core_Object::connect($testSignalClass, "signalWithOneArgument", $testSlotClass, "testSlotForsignalWithOneArgument");
+RCS_Core_Object::connect($testSignalClass, "signalWithOneArgument", $testSlotClass, "testSlotForSignalWithOneArgument");
 
-RCS_Core_Object::connectByName("Test_Signal_Class", "signalWithOneArgument", $testSlotClass, "testSlotForsignalWithOneArgument");
+// This can be used in cases where the original code implementation was done very poorly, 
+// or possibly encoded into a package such as Zend Guard or a PHP extension where you can't access the source directly
+RCS_Core_Object::connectByName("Test_Signal_Class", "signalWithOneArgument", $testSlotClass, "testSlotForSignalWithOneArgument");
 
+// This has just one connection
 $testSignalClass->testFunctionEmittingSignalWithNoArguments();
+
+// This has two connections
 $testSignalClass->testFunctionEmittingSignalWithOneArgument();
 
-print "<hr />";
-var_dump($testSignalClass);
-var_dump($testSlotClass);
-die;

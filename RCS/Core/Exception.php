@@ -8,6 +8,9 @@
  * @subpackage Core
  * @copyright  Copyright (c) 2009 RCS
  * @author RCS
- * @version 0.1.2
+ * @version 0.2.4
  */
-class RCS_Core_Exception extends Exception {}
+class RCS_Core_Exception extends Exception
+{
+}
+
